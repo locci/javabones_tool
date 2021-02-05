@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Java Unified Expression Language :: Guide :: Basic Classes :: Method Expressions</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<link href="../../skin/css/page.css" rel="stylesheet" type="text/css"/>
+<link href="../../skin/css/content.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="header">
+<a href="../../index.html">
+<img alt="JUEL" src="../../skin/images/juel-logo.gif"/>
+</a>
+<div class="navigation">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="left" class="trail">
+<span class="selected">
+<a href="../../index.html">Home</a>
+</span> | <a href="http://sourceforge.net/projects/juel/">SourceForge</a> | <a href="https://github.com/beckchr/juel/">GitHub</a>
+</td>
+<td align="right" class="tabs">
+<a href="http://prdownloads.sourceforge.net/juel/juel-2.2.7.zip?download">Download</a> | <a href="../../juel.pdf">PDF</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="leftcol">
+<div class="menu">
+<ul>
+<li class="selected-contained">
+<a href="../../guide/index.html">Guide</a>
+<ul>
+<li>
+<a href="../../guide/start.html">Quickstart</a>
+</li>
+<li class="selected-contained">
+<a href="../../guide/basic/index.html">Basic Classes</a>
+<ul>
+<li>
+<a href="../../guide/basic/factory.html">Expression Factory</a>
+</li>
+<li>
+<a href="../../guide/basic/value.html">Value Expressions</a>
+</li>
+<li>
+<span class="selected">Method Expressions</span>
+</li>
+</ul>
+</li>
+<li>
+<a href="../../guide/util/index.html">Utility Classes</a>
+</li>
+<li>
+<a href="../../guide/service.html">Plugin JUEL</a>
+</li>
+<li>
+<a href="../../guide/advanced/index.html">Advanced Topics</a>
+</li>
+<li>
+<a href="../../guide/issues.html">Specification Issues</a>
+</li>
+</ul>
+</li>
+<li>
+<span>Project</span>
+<ul>
+<li>
+<a href="../../project/changes.html">History of Changes</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="maincol">
+<div class="content">
+<h2>Method Expressions</h2>
+		<p>
+			Method expressions can be "invoked". A <span class="codefrag">javax.el.MethodExpression</span>
+			is invoked by calling its <span class="codefrag">invoke(ELContext, Object&lt;?&gt;[])</span> method. The specification
+			also allows to treat literal text as a method expression.
+		</p>
+		<p>
+			A method expression is called a <em>literal method expression</em> if its underlying expression is
+			literal text (that is, <span class="codefrag">isLiteralText()</span> returns <span class="codefrag">true</span>).
+			All other method expressions are called <em>non-literal method expressions</em>.
+			Non-literal method expressions share the same syntax as <a href="../../guide/basic/value.html#lvalue">lvalue expressions</a>.
+		</p>
+		<p>
+			For literal method expressions
+		</p>
+		<ul>
+			<li>
+				<span class="codefrag">invoke(ELContext, Object&lt;?&gt;[])</span> simply returns the expression string,
+				optionally coerced to the expected return type specified at creation time.
+			</li>
+			<li>
+				<span class="codefrag">getMethodInfo(ELContext)</span> always returns <span class="codefrag">null</span>.
+			</li>
+		</ul>
+		<p>
+			On the other hand, non-literal method expressions refer to a <span class="codefrag">java.lang.reflext.Method</span>
+			which can be invoked or used to create a <span class="codefrag">javax.el.MethodInfo</span> instance.
+			For non-literal method expressions
+		</p>
+		<ul>
+			<li>
+				<span class="codefrag">invoke(ELContext, Object&lt;?&gt;[])</span> evaluates the expression to a
+				<span class="codefrag">java.lang.reflext.Method</span> and invokes that method, passing over the
+				given actual parameters.
+			</li>
+			<li>
+				the found method must match the expected return type (if it is not <span class="codefrag">null</span>)
+				and the argument types given at creation time; otherwise an exception is thrown.
+			</li>
+		</ul>
+		<a name="N65624">
+<!--empty tag-->
+</a>
+<a name="tree">
+<!--empty tag-->
+</a>
+<h3>Tree Method Expressions</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+				Class <span class="codefrag">de.odysseus.el.TreeMethodExpression</span> is a subclass of
+				<span class="codefrag">javax.el.MethodExpression</span>, which is used by <em>JUEL</em> to represent
+				method expressions. It is the return type of
+			</p>
+<pre class="code">ExpressionFactoryImpl.createMethodExpression(ELContext, String, Class&lt;?&gt;, Class&lt;?&gt;[])</pre>
+<p>
+				In addition to the methods declared by <span class="codefrag">javax.el.MethodExpression</span>, it provides
+			</p>
+<ul>
+				<li>
+<span class="codefrag">void dump(java.io.PrintWriter writer)</span> – dump parse tree</li>
+				<li>
+					<span class="codefrag">boolean isDeferred()</span> – <span class="codefrag">true</span> if expression is
+					deferred (contains eval expressions <span class="codefrag">#{...}</span>)
+				</li>
+			</ul>
+<pre class="code">import java.io.*;
+import de.odysseus.el.*;
+import de.odysseus.el.util.*;
+...
+ExpressionFactoryImpl factory = new ExpressionFactoryImpl();
+SimpleContext context = new SimpleContext(); // more on this <a href="../../guide/util/context.html">here</a>...
+TreeMethodExpression e =
+  factory.createMethodExpression(context, "#{x.toString}", String.class, new Class[]{});
+PrintWriter out = new PrintWriter(System.out);
+e.dump(out);
+// +- #{...}
+//   |
+//   +- . toString
+//      |
+//      +- x
+out.flush();
+System.out.println(e.isDeferred()); // true
+...</pre>
+</div>
+	</div>
+</div>
+<div id="footer">
+		© 2006-2013 Odysseus Software GmbH. All rights reserved.
+	</div>
+</body>
+</html>

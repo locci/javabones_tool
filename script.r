@@ -1,0 +1,5 @@
+MyData <- read.csv(file='csvFor.csv')
+df <- data.frame (MyData)
+colnames(df) <- c("num")
+h <- hist(df$num)
+plot(h)

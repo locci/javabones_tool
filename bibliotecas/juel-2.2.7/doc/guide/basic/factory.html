@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Java Unified Expression Language :: Guide :: Basic Classes :: Expression Factory</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<link href="../../skin/css/page.css" rel="stylesheet" type="text/css"/>
+<link href="../../skin/css/content.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="header">
+<a href="../../index.html">
+<img alt="JUEL" src="../../skin/images/juel-logo.gif"/>
+</a>
+<div class="navigation">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="left" class="trail">
+<span class="selected">
+<a href="../../index.html">Home</a>
+</span> | <a href="http://sourceforge.net/projects/juel/">SourceForge</a> | <a href="https://github.com/beckchr/juel/">GitHub</a>
+</td>
+<td align="right" class="tabs">
+<a href="http://prdownloads.sourceforge.net/juel/juel-2.2.7.zip?download">Download</a> | <a href="../../juel.pdf">PDF</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="leftcol">
+<div class="menu">
+<ul>
+<li class="selected-contained">
+<a href="../../guide/index.html">Guide</a>
+<ul>
+<li>
+<a href="../../guide/start.html">Quickstart</a>
+</li>
+<li class="selected-contained">
+<a href="../../guide/basic/index.html">Basic Classes</a>
+<ul>
+<li>
+<span class="selected">Expression Factory</span>
+</li>
+<li>
+<a href="../../guide/basic/value.html">Value Expressions</a>
+</li>
+<li>
+<a href="../../guide/basic/method.html">Method Expressions</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="../../guide/util/index.html">Utility Classes</a>
+</li>
+<li>
+<a href="../../guide/service.html">Plugin JUEL</a>
+</li>
+<li>
+<a href="../../guide/advanced/index.html">Advanced Topics</a>
+</li>
+<li>
+<a href="../../guide/issues.html">Specification Issues</a>
+</li>
+</ul>
+</li>
+<li>
+<span>Project</span>
+<ul>
+<li>
+<a href="../../project/changes.html">History of Changes</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="maincol">
+<div class="content">
+<h2>Expression Factory</h2>
+		<p>
+			To start using the EL, you need an instance of <span class="codefrag">javax.el.ExpressionFactory</span>.
+			The expression factory is used to create expressions of various types.
+		</p>
+		<p>
+			<em>JUEL</em>'s expression factory implementation is <span class="codefrag">de.odysseus.el.ExpressionFactoryImpl</span>.
+			The easiest way to obtain an expression factory instance is
+		</p>
+		<pre class="code">javax.el.ExpressionFactory factory = new de.odysseus.el.ExpressionFactoryImpl();</pre>
+		<p>
+			An expression factory is thread-safe and can create an unlimited number of expressions.
+			The expression factory provides operations to
+		</p>
+		<ul>
+			<li>perform <a href="#coerce">type coercions</a>,</li>
+			<li>create <a href="../../guide/basic/value.html#tree">tree value expressions</a>,</li>
+			<li>create <a href="../../guide/basic/value.html#object">object value expressions</a>,</li>
+			<li>create <a href="../../guide/basic/method.html#tree">tree method expressions</a>.</li>
+		</ul>
+		<a name="N65602">
+<!--empty tag-->
+</a>
+<h3>Expression Cache</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+				Each factory instance uses its own expression cache. Caching expressions can be an
+				important issue, because parsing is relative expensive. An expression cache
+				maps expression strings to their parsed representations (trees).
+			</p>
+<p>
+				<em>JUEL</em> provides a caching interface which allows applications to use their
+				own caching mechanism. However, in most scenarios, <em>JUEL</em>'s default
+				implementation (based on <span class="codefrag">java.util.concurrent.ConcurrentHashMap</span> and
+				<span class="codefrag">java.util.concurrent.ConcurrentLinkedQueue</span>) should be fine.
+			</p>
+<div class="frame note">
+<div class="label">Note</div>
+<div class="body">
+			    The caching mechanism has been rewritten for JUEL 2.2.5 to improve performance.
+			</div>
+</div>
+<p>
+				The default constructor uses a maximum cache size of 1000. You may specify a different
+				value - say 5000 - by specifying the <span class="codefrag">javax.el.cacheSize</span> property.
+			</p>
+<pre class="code">java.util.Properties properties = new java.util.Properties();
+properties.put("javax.el.cacheSize", "5000");
+javax.el.ExpressionFactory factory = new de.odysseus.el.ExpressionFactoryImpl(properties);</pre>
+<p>
+				Using your own caching mechanism is covered in the <a href="../../guide/advanced/index.html">Advanced
+				Topics</a> secion.
+			</p>
+</div>
+		<a name="N65647">
+<!--empty tag-->
+</a>
+<a name="coerce">
+<!--empty tag-->
+</a>
+<h3>Type Conversions</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+				Type conversions are performed at several points while evaluating expressions.
+			</p>
+<ul>
+				<li>Operands are coerced when performing arithmetic or logical operations</li>
+				<li>Value expression results are coerced to the expected type specified at creation time</li>
+				<li>For literal method expressions the text is coerced to the type specified at creation time</li>
+				<li>For non-literal method expressions the last property is coerced to a method name</li>
+				<li>Composite expression coerce their sub-expressions to strings before concatenating them</li>
+			</ul>
+<p>
+				All these coercions are done following the same rules.
+				The specification describes these coercion rules in detail. It supports converting between string,
+				character, boolean, enumeration and number types. Additionally, the conversion of strings to other types
+				is supported by the use of (Java Beans) property editors.
+				The EL makes the coercion rules available to client applications via the expression factory method
+			</p>
+<pre class="code">ExpressionFactoryImpl.coerceToType(Object, Class&lt;?&gt;)</pre>
+<p>
+				whose return type is <span class="codefrag">Object</span>.
+			</p>
+<p>
+				<em>JUEL</em> can be configured to use alternative coercion rules as described
+				in the <a href="../../guide/advanced/index.html">Advanced Topics</a> secion.
+			</p>
+</div>
+		<a name="N65699">
+<!--empty tag-->
+</a>
+<a name="config">
+<!--empty tag-->
+</a>
+<h3>Factory Configuration</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+				The factory may be configured via property files. The mechanism described here
+				is used when an expression factory is created without specifying properties.
+				The lookup procedure for properties is as follows:
+			</p>
+<ol>
+				<li>
+					<span class="codefrag">JAVA_HOME/lib/el.properties</span> -
+					If this file contains property <span class="codefrag">javax.el.ExpressionFactory</span>
+					whose value is <span class="codefrag">de.odysseus.el.ExpressionFactoryImpl</span>, its
+					properties are loaded and taken as default properties.
+				</li>
+				<li>
+					<span class="codefrag">System.getProperties()</span> -
+					if the previous rule (1) did not match and system property
+					<span class="codefrag">javax.el.ExpressionFactory</span> is set to
+					<span class="codefrag">de.odysseus.el.ExpressionFactoryImpl</span>,
+					the system properties are taken as default properties.
+				</li>
+				<li>
+					<span class="codefrag">el.properties</span> anywhere on your classpath -
+					These properties may override the default properties from (1) or (2).
+				</li>
+				</ol>
+<p>
+				Having this, the following properties are read:
+			</p>
+<ul>
+				<li>
+					<span class="codefrag">javax.el.cacheSize</span> - expression cache size (default is 1000)
+				</li>
+				<li>
+					<span class="codefrag">javax.el.methodInvocations</span> - set to <span class="codefrag">true</span> to allow method invocations.
+					Please refer to the <a href="../../guide/advanced/index.html#methodInvocations">Advanced Topics</a> section for more on this.
+				</li>
+				<li>
+					<span class="codefrag">javax.el.nullProperties</span> - set to <span class="codefrag">true</span> to resolve <span class="codefrag">null</span>
+					properties.
+					Please refer to the <a href="../../guide/advanced/index.html#nullProperties">Advanced Topics</a> section for more on this.
+				</li>
+				<li>
+					<span class="codefrag">javax.el.varArgs</span> - set to <span class="codefrag">true</span> to allow vararg function/method calls
+					in your expressions.
+				</li>
+			</ul>
+<p>
+				The factory class also provides constructors which let you explicitly pass your
+				properties. If you just want to switch between JEE5 and JEE6 style, <em>JUEL</em>
+				provides enum constants to use as profiles.
+			</p>
+</div>
+	</div>
+</div>
+<div id="footer">
+		© 2006-2013 Odysseus Software GmbH. All rights reserved.
+	</div>
+</body>
+</html>

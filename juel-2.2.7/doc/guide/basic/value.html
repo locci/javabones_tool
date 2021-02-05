@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Java Unified Expression Language :: Guide :: Basic Classes :: Value Expressions</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<link href="../../skin/css/page.css" rel="stylesheet" type="text/css"/>
+<link href="../../skin/css/content.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="header">
+<a href="../../index.html">
+<img alt="JUEL" src="../../skin/images/juel-logo.gif"/>
+</a>
+<div class="navigation">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="left" class="trail">
+<span class="selected">
+<a href="../../index.html">Home</a>
+</span> | <a href="http://sourceforge.net/projects/juel/">SourceForge</a> | <a href="https://github.com/beckchr/juel/">GitHub</a>
+</td>
+<td align="right" class="tabs">
+<a href="http://prdownloads.sourceforge.net/juel/juel-2.2.7.zip?download">Download</a> | <a href="../../juel.pdf">PDF</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="leftcol">
+<div class="menu">
+<ul>
+<li class="selected-contained">
+<a href="../../guide/index.html">Guide</a>
+<ul>
+<li>
+<a href="../../guide/start.html">Quickstart</a>
+</li>
+<li class="selected-contained">
+<a href="../../guide/basic/index.html">Basic Classes</a>
+<ul>
+<li>
+<a href="../../guide/basic/factory.html">Expression Factory</a>
+</li>
+<li>
+<span class="selected">Value Expressions</span>
+</li>
+<li>
+<a href="../../guide/basic/method.html">Method Expressions</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="../../guide/util/index.html">Utility Classes</a>
+</li>
+<li>
+<a href="../../guide/service.html">Plugin JUEL</a>
+</li>
+<li>
+<a href="../../guide/advanced/index.html">Advanced Topics</a>
+</li>
+<li>
+<a href="../../guide/issues.html">Specification Issues</a>
+</li>
+</ul>
+</li>
+<li>
+<span>Project</span>
+<ul>
+<li>
+<a href="../../project/changes.html">History of Changes</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="maincol">
+<div class="content">
+<h2>Value Expressions</h2>
+		<p>
+			Value expressions are expressions that are evaluated in the "classical sense".
+			There are two kinds of value expressions: those created by parsing an expression string
+			and those simply wrapping an object.
+		</p>
+		<p>
+			A <span class="codefrag">javax.el.ValueExpression</span> is evaluated by calling its <span class="codefrag">getValue(ELContext)</span>
+			method. Value expressions can also be writable and provide methods <span class="codefrag">isReadOnly(ELContext)</span>,
+			<span class="codefrag">getType(ELContext)</span> and <span class="codefrag">setValue(ELContext, Object)</span>.
+		</p>
+		<a name="lvalue"/>
+		<p>
+			A value expression is called an <em>lvalue expression</em> if its expression string is an eval
+			expression (<span class="codefrag">#{...}</span> or <span class="codefrag">${...}</span>) consisting of a single identifier or a
+			nonliteral prefix (function, identifier or nested expression), followed by a sequence of property
+			operators (<span class="codefrag">.</span> or <span class="codefrag">[]</span>).
+			All other value expressions are called <em>non-lvalue expressions</em>.
+		</p>
+		<p>
+			For non-lvalue expressions
+		</p>
+		<ul>
+			<li>
+				<span class="codefrag">getType(ELContext)</span> method will always return <span class="codefrag">null</span>.
+			</li>
+			<li>
+				<span class="codefrag">isReadOnly(ELContext)</span> method will always return <span class="codefrag">true</span>.
+			</li>
+			<li>
+				<span class="codefrag">setValue(ELContext, Object)</span> method will always throw an exception.
+			</li>
+		</ul>
+		<a name="N65623">
+<!--empty tag-->
+</a>
+<a name="tree">
+<!--empty tag-->
+</a>
+<h3>Tree Value Expressions</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+				Creating a tree value expression involves
+			</p>
+<ol>
+				<li>parsing an expression string and building an abstract syntax tree,</li>
+				<li>binding functions and variables using the mappers provided by the context.</li>
+			</ol>
+<p>
+				Once created, a tree value expression can be evaluated using the <span class="codefrag">getValue(ELContext)</span>
+				method. The result is automatically coerced to the expected type given at creation time.
+			</p>
+<p>
+				Class <span class="codefrag">de.odysseus.el.TreeValueExpression</span> is a subclass of
+				<span class="codefrag">javax.el.ValueExpression</span>, which is used by <em>JUEL</em> to represent
+				a value expression, that has been created from an expression string.
+				It is the return type of
+			</p>
+<pre class="code">ExpressionFactoryImpl.createValueExpression(ELContext, String, Class&lt;?&gt;)</pre>
+<p>
+				In addition to the methods available for <span class="codefrag">javax.el.ValueExpression</span>,
+				it provides methods
+			</p>
+<ul>
+				<li>
+<span class="codefrag">void dump(java.io.PrintWriter writer)</span> – dump parse tree</li>
+				<li>
+					<span class="codefrag">boolean isDeferred()</span> – <span class="codefrag">true</span> if expression is
+					deferred (contains eval expressions <span class="codefrag">#{...}</span>)
+				</li>
+				<li>
+					<span class="codefrag">boolean isLeftValue()</span> – <span class="codefrag">true</span> if expression is
+					an lvalue expression.
+				</li>
+			</ul>
+<pre class="code">import java.io.*;
+import de.odysseus.el.*;
+import de.odysseus.el.util.*;
+...
+ExpressionFactoryImpl factory = new ExpressionFactoryImpl();
+SimpleContext context = new SimpleContext(); // more on this <a href="../../guide/util/context.html">here</a>...
+TreeValueExpression e = factory.createValueExpression(context, "#{pi/2}", Object.class);
+PrintWriter out = new PrintWriter(System.out);
+e.dump(out);
+// +- #{...}
+//    |
+//    +- '/'
+//       |
+//       +- pi
+//       |
+//       +- 2
+out.flush();
+System.out.println(e.isDeferred()); // true
+System.out.println(e.isLeftValue()); // false
+...</pre>
+</div>
+		<a name="N65709">
+<!--empty tag-->
+</a>
+<a name="object">
+<!--empty tag-->
+</a>
+<h3>Object Value Expressions</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+				An object value expression simply wraps an object giving it an "expression facade".
+				At the first place, object expressions are used to define variables.
+			</p>
+<p>
+				Once created, an object value expression can be evaluated using the <span class="codefrag">getValue(ELContext)</span>
+				method, which simply returns the wrapped object, coerced to the expected type provided at
+				creation time.
+			</p>
+<p>
+				Class <span class="codefrag">de.odysseus.el.ObjectValueExpression</span> is a subclass of
+				<span class="codefrag">javax.el.ValueExpression</span>, which is used by <em>JUEL</em> to represent
+				a value expression, that has been created from an object. It is the return type of
+			</p>
+<pre class="code">ExpressionFactoryImpl.createValueExpression(Object, Class&lt;?&gt;)</pre>
+<p>
+				This class provides no extra methods to those available for <span class="codefrag">javax.el.ValueExpression</span>.
+			</p>
+<pre class="code">import java.io.*;
+import de.odysseus.el.*;
+import de.odysseus.el.util.*;
+...
+ExpressionFactoryImpl factory = new ExpressionFactoryImpl();
+SimpleContext context = new SimpleContext(); // more on this <a href="../../guide/util/context.html">here</a>...
+ObjectValueExpression e = factory.createValueExpression(Math.PI, Double.class);
+context.setVariable("pi", e);
+...</pre>
+</div>
+	</div>
+</div>
+<div id="footer">
+		© 2006-2013 Odysseus Software GmbH. All rights reserved.
+	</div>
+</body>
+</html>

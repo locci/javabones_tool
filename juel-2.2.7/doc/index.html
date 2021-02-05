@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Java Unified Expression Language</title>
+<meta content="2.2.5" name="version"/>
+<meta content="Unified Expression Language, Unified EL, EL, JUEL, javax.el, JSP, JSF" name="keywords"/>
+<meta content="JUEL is an implementation of the Unified Expression Language (EL), specified as part of the JSP 2.1 standard (JSR-245)." name="description"/>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<link href="./skin/css/page.css" rel="stylesheet" type="text/css"/>
+<link href="./skin/css/content.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="header">
+<a href="./index.html">
+<img alt="JUEL" src="./skin/images/juel-logo.gif"/>
+</a>
+<div class="navigation">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="left" class="trail">
+<span class="selected">
+<a href="./index.html">Home</a>
+</span> | <a href="http://sourceforge.net/projects/juel/">SourceForge</a> | <a href="https://github.com/beckchr/juel/">GitHub</a>
+</td>
+<td align="right" class="tabs">
+<a href="http://prdownloads.sourceforge.net/juel/juel-2.2.7.zip?download">Download</a> | <a href="./juel.pdf">PDF</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="leftcol">
+<div class="menu">
+<ul>
+<li>
+<a href="./guide/index.html">Guide</a>
+<ul>
+<li>
+<a href="./guide/start.html">Quickstart</a>
+</li>
+<li>
+<a href="./guide/basic/index.html">Basic Classes</a>
+</li>
+<li>
+<a href="./guide/util/index.html">Utility Classes</a>
+</li>
+<li>
+<a href="./guide/service.html">Plugin JUEL</a>
+</li>
+<li>
+<a href="./guide/advanced/index.html">Advanced Topics</a>
+</li>
+<li>
+<a href="./guide/issues.html">Specification Issues</a>
+</li>
+</ul>
+</li>
+<li>
+<span>Project</span>
+<ul>
+<li>
+<a href="./project/changes.html">History of Changes</a>
+</li>
+</ul>
+</li>
+</ul>
+<p/>
+<a href="http://sourceforge.net/projects/juel/">
+<img alt="SF.net" border="0" height="37" src="http://sflogo.sourceforge.net/sflogo.php?group_id=165179&amp;type=2" width="125"/>
+</a>
+<p/>
+<a href="http://stan4j.com">
+<img alt="stan4j.com" border="0" height="40" src="http://logo.stan4j.com/stan4j-125x40-t0.png" target="_blank" title="stan4j.com" width="125"/>
+</a>
+</div>
+</div>
+<div id="maincol">
+<div class="content">
+<h2>Welcome to JUEL!</h2>
+		<p>
+			<em>JUEL</em> is an implementation of the Unified Expression Language (EL), specified as
+			part of the JSP 2.1 standard (<a href="http://jcp.org/aboutJava/communityprocess/final/jsr245/">JSR-245</a>), which has been
+			introduced in JEE5.
+			Additionally, <em>JUEL</em> 2.2 implements the JSP 2.2 maintenance release specification
+			for full JEE6 compliance.
+		</p>
+		<a name="N65573">
+<!--empty tag-->
+</a>
+<h3>Motivation</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+				Once, the EL started as part of JSTL. Then, the EL made its way into the JSP 2.0 standard.
+				Now, though part of JSP 2.1, the EL API has been separated into package <span class="codefrag">javax.el</span>
+				and all dependencies to the core JSP classes have been removed.
+			</p>
+<p>
+				In other words: the EL is ready for use in non-JSP applications!
+			</p>
+</div>
+		<a name="N65588">
+<!--empty tag-->
+</a>
+<h3>Features</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+				<em>JUEL</em> provides a lightweight and efficient implementation of the
+				Unified Expression Language.
+			</p>
+<ul>
+				<li>
+					High Performance –
+					Parsing expressions is certainly the expected performance bottleneck.
+					<em>JUEL</em> uses a hand-coded parser which is up to 10 times faster
+					than the previously used (javacc) generated parser!
+					Once built, expression trees are evaluated at highest speed.
+				</li>
+				<li>
+					Pluggable Cache –
+					Even if <em>JUEL</em>s parser is fast, parsing expressions is relative
+					expensive. Therefore, it's best to parse an expression string only once.
+					<em>JUEL</em> provides a default caching mechanism which should be sufficient
+					in most cases. However, <em>JUEL</em> allows to plug in your own cache easily.
+				</li>
+				<li>
+					Small Footprint –
+					<em>JUEL</em> has been carefully designed to minimize memory usage as well as
+					code size.
+				</li>
+				<li>
+					Method Invocations –
+					<em>JUEL</em> supports method invocations as in <span class="codefrag">${foo.matches('[0-9]+')}</span>.
+					Methods are resolved and invoked using the EL's resolver mechanism.
+					As of <em>JUEL</em> 2.2, method invocations are enabled by default.
+				</li>
+				<li>
+					VarArg Calls –
+					<em>JUEL</em> supports Java 5 VarArgs in function and method invocations.
+					E.g., binding <span class="codefrag">String.format(String, String...)</span>
+					to function <span class="codefrag">format</span> allows for <span class="codefrag">${format('Hey %s','Joe')}</span>.
+					As of <em>JUEL</em> 2.2, VarArgs are enabled by default.
+				</li>
+				<li>
+					Pluggable –
+					<em>JUEL</em> can be configured to be transparently detected as EL
+					implementation by a Java runtime environment or JEE application server.
+					Using <em>JUEL</em> does not require an application to explicitly
+					reference any of the <em>JUEL</em> specific implementation classes.
+				</li>
+			</ul>
+</div>
+		<a name="N65669">
+<!--empty tag-->
+</a>
+<h3>Status</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+				<em>JUEL</em> is considered production stable. The code is well tested (80% coverage) and feature complete.
+			</p>
+</div>
+		<a name="N65681">
+<!--empty tag-->
+</a>
+<h3>Availability</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+				<em>JUEL</em> is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.
+			</p>
+</div>
+		<a name="N65697">
+<!--empty tag-->
+</a>
+<h3>Requirements</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+				<em>JUEL</em> requires Java 5 or later.
+			</p>
+</div>
+	</div>
+</div>
+<div id="footer">
+		© 2006-2013 Odysseus Software GmbH. All rights reserved.
+	</div>
+</body>
+</html>

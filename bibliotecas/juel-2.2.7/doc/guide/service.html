@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Java Unified Expression Language :: Guide :: Plugin JUEL</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<link href="../skin/css/page.css" rel="stylesheet" type="text/css"/>
+<link href="../skin/css/content.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="header">
+<a href="../index.html">
+<img alt="JUEL" src="../skin/images/juel-logo.gif"/>
+</a>
+<div class="navigation">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="left" class="trail">
+<span class="selected">
+<a href="../index.html">Home</a>
+</span> | <a href="http://sourceforge.net/projects/juel/">SourceForge</a> | <a href="https://github.com/beckchr/juel/">GitHub</a>
+</td>
+<td align="right" class="tabs">
+<a href="http://prdownloads.sourceforge.net/juel/juel-2.2.7.zip?download">Download</a> | <a href="../juel.pdf">PDF</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="leftcol">
+<div class="menu">
+<ul>
+<li class="selected-contained">
+<a href="../guide/index.html">Guide</a>
+<ul>
+<li>
+<a href="../guide/start.html">Quickstart</a>
+</li>
+<li>
+<a href="../guide/basic/index.html">Basic Classes</a>
+</li>
+<li>
+<a href="../guide/util/index.html">Utility Classes</a>
+</li>
+<li>
+<span class="selected">Plugin JUEL</span>
+</li>
+<li>
+<a href="../guide/advanced/index.html">Advanced Topics</a>
+</li>
+<li>
+<a href="../guide/issues.html">Specification Issues</a>
+</li>
+</ul>
+</li>
+<li>
+<span>Project</span>
+<ul>
+<li>
+<a href="../project/changes.html">History of Changes</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="maincol">
+<div class="content">
+<h2>Plugin JUEL</h2>
+		<p>
+			A recent addition to <span class="codefrag">javax.el.ExpressionFactory</span> have been the static methods
+			<span class="codefrag">newInstance()</span> and <span class="codefrag">newInstance(java.util.Properties)</span>.
+		</p>
+		<p>
+			With these methods, selection of a particular EL implementation is completely
+			transparent to the application code. E.g., the first line of our
+			<a href="../guide/start.html">Quickstart example</a> could be rewritten as
+		</p>
+		<pre class="code">ExpressionFactory factory = ExpressionFactory.newInstance();</pre>
+		<p>
+			Either of the new methods will determine a factory implementation class and create
+			an instance of it. The first variant will use its default constructor. The latter
+			will use a constructor taking a single <span class="codefrag">java.util.Properties</span> object as parameter.
+			The lookup procedure uses the Service Provider API as detailed in the JAR specification.
+		</p>
+		<p>
+			The <span class="codefrag">juel-spi-2.2.x.jar</span> does the trick: if on your classpath, the lookup
+			procedure will detect <span class="codefrag">de.odysseus.el.ExpressionFactoryImpl</span> as service provider
+			class.
+		</p>
+		<p>
+			This way, <em>JUEL</em> can be used without code references to any of its
+			implementation specific classes. Just <span class="codefrag">javax.el.*</span>...
+		</p>
+		<div class="frame note">
+<div class="label">Note</div>
+<div class="body">
+			The new API is part of the EL since version 2.2 (JEE6). Therefore, it may not be
+			supported in environments which are based on EL 2.1 (JEE5).
+		</div>
+</div>
+		<p>
+			Depending on your application's scenario, there may be several ways to register
+			<em>JUEL</em> as default EL implementation.
+		</p>
+		<ul>
+			<li>
+				Place the JUEL JARs into directory <span class="codefrag">JRE_HOME/lib/ext</span>.
+				This will make JUEL available globally for all applications running in that
+				environment.
+			</li>
+			<li>
+				You may simply drop <span class="codefrag">juel-impl-2.2.x.jar</span>
+				and <span class="codefrag">juel-spi-2.2.x.jar</span> into your <span class="codefrag">/WEB-INF/lib</span>
+				directory. This will result in using <em>JUEL</em> as EL implementation for
+				that particular web application.
+			</li>
+			<li>
+				Of course you can also add the jar files to your classpath manually.
+			</li>
+		</ul>
+		<p>
+			Please refer to the section on <a href="../guide/basic/factory.html#config">Factory Configuration</a>
+			on how to configure an expression factory via property files.
+		</p>
+	</div>
+</div>
+<div id="footer">
+		© 2006-2013 Odysseus Software GmbH. All rights reserved.
+	</div>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Java Unified Expression Language :: Guide :: Specification Issues</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<link href="../skin/css/page.css" rel="stylesheet" type="text/css"/>
+<link href="../skin/css/content.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="header">
+<a href="../index.html">
+<img alt="JUEL" src="../skin/images/juel-logo.gif"/>
+</a>
+<div class="navigation">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="left" class="trail">
+<span class="selected">
+<a href="../index.html">Home</a>
+</span> | <a href="http://sourceforge.net/projects/juel/">SourceForge</a> | <a href="https://github.com/beckchr/juel/">GitHub</a>
+</td>
+<td align="right" class="tabs">
+<a href="http://prdownloads.sourceforge.net/juel/juel-2.2.7.zip?download">Download</a> | <a href="../juel.pdf">PDF</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="leftcol">
+<div class="menu">
+<ul>
+<li class="selected-contained">
+<a href="../guide/index.html">Guide</a>
+<ul>
+<li>
+<a href="../guide/start.html">Quickstart</a>
+</li>
+<li>
+<a href="../guide/basic/index.html">Basic Classes</a>
+</li>
+<li>
+<a href="../guide/util/index.html">Utility Classes</a>
+</li>
+<li>
+<a href="../guide/service.html">Plugin JUEL</a>
+</li>
+<li>
+<a href="../guide/advanced/index.html">Advanced Topics</a>
+</li>
+<li>
+<span class="selected">Specification Issues</span>
+</li>
+</ul>
+</li>
+<li>
+<span>Project</span>
+<ul>
+<li>
+<a href="../project/changes.html">History of Changes</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="maincol">
+<div class="content">
+<h2>Specification Issues</h2>
+		<p>
+			<em>JUEL</em> tries to be as close as possible to the EL specification. However, the spec
+			isn't always clear, leaves some details open and sometimes even seems to be incorrect.
+			For these certain gaps, <em>JUEL</em> had to make decisions that could not be derived from
+			the specification. We still hope that the specification could be updated to make things
+			more clear. Until then, we will have this section to list the specification issues.
+		</p>
+		<ol>
+			<li>
+				In section 1.19, "Collected Syntax", the specification defines Nonterminal
+				<span class="codefrag">LValueInner</span> (which describes an lvalue expression) as
+				<pre class="code">LValueInner ::= Identifier | NonLiteralValuePrefix (ValueSuffix)*</pre>
+				This would mean - since <span class="codefrag">NonLiteralValuePrefix</span> can be expanded to a
+				nested expression or function invocation - that <span class="codefrag">${(1)}</span> or <span class="codefrag">${foo()}</span>
+				were lvalue expressions.
+				<em>JUEL</em> considers this to be a bug and guesses that the above should read as
+				<pre class="code">LValueInner ::= Identifier | NonLiteralValuePrefix (ValueSuffix)+</pre>
+				instead.
+			</li>
+			<li>
+				<p>
+					In section 1.2.3, "Literal Expressions", the specification states that
+					"the escape characters <span class="codefrag">\$</span> and <span class="codefrag">\#</span> can be used to escape
+					what would otherwise be treated as an eval-expression". The specification doesn't
+					tell us if <span class="codefrag">'\'</span> is used to escape other characters in literal expressions,
+					too. Consequently, <em>JUEL</em> treats <span class="codefrag">'\'</span> as escape character only when
+					immediately followed by <span class="codefrag">'${'</span> and <span class="codefrag">'#{'</span>.
+				</p>
+				<div class="frame note">
+<div class="label">Note</div>
+<div class="body">
+					Expression <span class="codefrag">\\${</span> evaluates to <span class="codefrag">'\${'</span>, whereas
+					<span class="codefrag">\$</span> evaluates to <span class="codefrag">'\$'</span> and
+					<span class="codefrag">\\</span> evaluates to <span class="codefrag">'\\'</span>.
+				</div>
+</div>
+				<p/> <!-- TODO fop issue with space-after, so add manual space here -->
+			</li>
+			<li>
+				<p>
+					In section 1.3, "Literals", the specification states that
+					"Quotes only need to be escaped in a string value enclosed in the same type of quote".
+					This suggests that, e.g., "You could escape a single quote in a double-quoted string,
+					but it's not necessary". <em>JUEL</em> guesses that you can't and that the above should
+					read as "Quotes can only be escaped in a string value enclosed in the same type of quote".
+				</p>
+				<div class="frame note">
+<div class="label">Note</div>
+<div class="body">
+					The '\' in expression <span class="codefrag">${'\"'}</span> doesn't escape the double quote.
+				</div>
+</div>
+				<p/> <!-- TODO fop issue with space-after, so add manual space here -->
+			</li>
+			<li>
+				<p>
+					From section 1.2.1.2, "Eval-expressions as method expressions", it is clear that
+					a single identifier expression, e.g. <span class="codefrag">${foo}</span>, can be used
+					as a method expression. However, the specification doesn't tell <em>how</em>
+					to evaluate such a method expression! Unfortunately, there's no obvious guess, here...
+					<em>JUEL</em> evaluates method expression <span class="codefrag">${foo}</span> as follows (let
+					<span class="codefrag">paramTypes</span> be the supplied expected method parameter types,
+					<span class="codefrag">returnType</span> the expected return type):
+				</p>
+				<ul>
+					<li>Evaluate <span class="codefrag">${foo}</span> as a value expression</li>
+					<li>
+						If the result is an instance of <span class="codefrag">java.lang.reflect.Method</span>
+						<ul>
+							<li>if the method is not static, then error.</li>
+							<li>if the method's parameter types do not match the <span class="codefrag">paramTypes</span>, then error.</li>
+							<li>
+								if <span class="codefrag">returnType</span> is not <span class="codefrag">null</span> and the method's return type
+								does not match <span class="codefrag">returnType</span>, then error.
+							</li>
+							<li>
+								If <span class="codefrag">MethodExpression.invoke(...)</span> was called, invoke
+								the found method with the parameters passed to the <span class="codefrag">invoke</span> method.
+							</li>
+							<li>
+								If <span class="codefrag">MethodExpression.getMethodInfo(...)</span> was called, construct
+								and return a new <span class="codefrag">MethodInfo</span> object.
+							</li>
+						</ul>
+					</li>
+					<li>
+						<em>JUEL 2.2.6 and later:</em>
+						If the result is an instance of <span class="codefrag">javax.el.MethodExpression</span>
+						<ul>
+							<li>
+								If <span class="codefrag">MethodExpression.invoke(...)</span> was called, delegate to
+								<span class="codefrag">invoke(...)</span> on the found method expression.
+							</li>
+							<li>
+								If <span class="codefrag">MethodExpression.getMethodInfo(...)</span> was called, delegate to
+								<span class="codefrag">getMethodInfo(...)</span> on the found method expression.
+							</li>
+						</ul>
+					</li>
+					<li>Otherwise, error</li>				
+				</ul>
+			</li>
+			<li>
+				<p>
+					Section 1.6, "Operators [] and .", describes the semantics of <span class="codefrag">base[property]</span>.
+					If <span class="codefrag">property</span> is <span class="codefrag">null</span>, the speciification states not to resolve
+					<span class="codefrag">null</span> on <span class="codefrag">base</span>.
+					Rather, <span class="codefrag">null</span> should be returned if <span class="codefrag">getValue(...)</span> has been called
+					and a <span class="codefrag">PropertyNotFoundException</span> should be thrown else.
+					As a consequence, it would not be possible to resolve <span class="codefrag">null</span> as a key in a map.
+					We think that this restriction is not really wanted and more generally, that
+					<span class="codefrag">property == null</span> should not even have been treated as a special case.
+					We have made an enhancement request, hoping that this will be changed in the future.
+					Because this has been explicitly stated in the spec, we had to implement it this way.
+					However, <em>JUEL</em>'s builder supports a feature <span class="codefrag">NULL_PROPERTIES</span> to
+					let you resolve <span class="codefrag">null</span> like any other property value.
+				</p>
+				<div class="frame note">
+<div class="label">Note</div>
+<div class="body">
+					Assume that <span class="codefrag">map</span> resolves to a <span class="codefrag">java.util.Map</span>.
+					Further assume that feature <span class="codefrag">NULL_PROPERTIES</span> is enabled. Evaluating
+					<span class="codefrag">${base[null]}</span> as an rvalue (lvalue) will get (put) the value for key
+					<span class="codefrag">null</span> in that map.
+				</div>
+</div>
+				<p/> <!-- TODO fop issue with space-after, so add manual space here -->
+			</li>
+			<li>
+				Section 1.19, "Collected Syntax" defines Nonterminal <span class="codefrag">IntegerLiteral</span> to be
+				an unsigned integer constant. Then it is said that "The value of an <span class="codefrag">IntegerLiteral</span>
+				ranges from <span class="codefrag">Long.MIN_VALUE</span> to <span class="codefrag">Long.MAX_VALUE</span>".
+				We take that as a hint that the spec wants us to parse integer literals into
+				<span class="codefrag">Long</span> values. However, the positive number <span class="codefrag">|Long.MIN_VALUE|</span> cannot
+				be stored in a <span class="codefrag">Long</span> since <span class="codefrag">Long.MAX_VALUE = |Long.MIN_VALUE| - 1</span>.
+				We think that the specification should have said that "The value of an <span class="codefrag">IntegerLiteral</span>
+				ranges from <span class="codefrag">0</span> to <span class="codefrag">Long.MAX_VALUE</span>".
+				Consequently, <em>JUEL</em> rejects <span class="codefrag">|Long.MIN_VALUE| = 9223372036854775808</span>
+				as an illegal integer literal.
+			</li>
+			<li>
+				Section 1.19, "Collected Syntax" defines Nonterminal <span class="codefrag">FloatingFointLiteral</span>
+				to be an unsigned floating point constant. Then it is said that "The value of a
+				<span class="codefrag">FloatingPointLiteral</span> ranges from <span class="codefrag">Double.MIN_VALUE</span> to
+				<span class="codefrag">Double.MAX_VALUE</span>".
+				We take that as a hint that the spec wants us to parse floating point literals into
+				<span class="codefrag">Double</span> values.
+				However, since <span class="codefrag">Double.MIN_VALUE</span> is the smallest positive value that can be
+				stored in a <span class="codefrag">Double</span>, this would exclude zero from the range of valid floating
+				point constants! We think that the specification should have said that "The value of a
+				<span class="codefrag">FloatingPointLiteral</span> ranges from <span class="codefrag">0</span> to <span class="codefrag">Double.MAX_VALUE</span>".
+				Consequently, <em>JUEL</em> accepts <span class="codefrag">0.0</span> as a legal floating point literal.
+			</li>
+		</ol>
+	</div>
+</div>
+<div id="footer">
+		© 2006-2013 Odysseus Software GmbH. All rights reserved.
+	</div>
+</body>
+</html>

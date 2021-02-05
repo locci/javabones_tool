@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Java Unified Expression Language :: Guide :: Advanced Topics</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<link href="../../skin/css/page.css" rel="stylesheet" type="text/css"/>
+<link href="../../skin/css/content.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="header">
+<a href="../../index.html">
+<img alt="JUEL" src="../../skin/images/juel-logo.gif"/>
+</a>
+<div class="navigation">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="left" class="trail">
+<span class="selected">
+<a href="../../index.html">Home</a>
+</span> | <a href="http://sourceforge.net/projects/juel/">SourceForge</a> | <a href="https://github.com/beckchr/juel/">GitHub</a>
+</td>
+<td align="right" class="tabs">
+<a href="http://prdownloads.sourceforge.net/juel/juel-2.2.7.zip?download">Download</a> | <a href="../../juel.pdf">PDF</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="leftcol">
+<div class="menu">
+<ul>
+<li class="selected-contained">
+<a href="../../guide/index.html">Guide</a>
+<ul>
+<li>
+<a href="../../guide/start.html">Quickstart</a>
+</li>
+<li>
+<a href="../../guide/basic/index.html">Basic Classes</a>
+</li>
+<li>
+<a href="../../guide/util/index.html">Utility Classes</a>
+</li>
+<li>
+<a href="../../guide/service.html">Plugin JUEL</a>
+</li>
+<li class="selected">Advanced Topics<ul/>
+</li>
+<li>
+<a href="../../guide/issues.html">Specification Issues</a>
+</li>
+</ul>
+</li>
+<li>
+<span>Project</span>
+<ul>
+<li>
+<a href="../../project/changes.html">History of Changes</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="maincol">
+<div class="content">
+<h2>Advanced Topics</h2>
+		<p>
+			This section covers some advanced <em>JUEL</em> topics.
+		</p>
+		<a name="N65554">
+<!--empty tag-->
+</a>
+<h3>Expression Trees</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+				An expression tree refers to the parsed representation of an expression string.
+				The basic classes and interfaces related to expression trees are contained in
+				package <span class="codefrag">de.odysseus.el.tree</span>. We won't cover all the tree related
+				classes here. Rather, we focus on the classes that can be used to provide a
+				customized tree cache and builder.
+			</p>
+<ol>
+				<li>
+					<span class="codefrag">Tree</span> –
+					This class represents a parsed expression string.
+				</li>
+				<li>
+					<span class="codefrag">TreeBuilder</span> –
+					General interface containing a single <span class="codefrag">build(String)</span> method.
+					A tree builder must be thread safe. The default implementation is
+					<span class="codefrag">de.odysseus.el.tree.impl.Builder</span>.
+				</li>
+				<li>
+					<span class="codefrag">TreeCache</span> –
+					General interface containing methods <span class="codefrag">get(String)</span> and
+					<span class="codefrag">put(String, Tree)</span>.
+					A tree cache must be thread safe, too. The default implementation is
+					<span class="codefrag">de.odysseus.el.tree.impl.Cache</span>.
+				</li>
+				<li>
+					<span class="codefrag">TreeStore</span> –
+					This class just combines a builder and a cache and contains
+					a single <span class="codefrag">get(String)</span> method.
+				</li>
+			</ol>
+<p>
+				The expression factory uses its tree store to create tree expressions.
+				The factory class provides a constructor which takes a tree store as an argument.
+			</p>
+<a name="N65613">
+<!--empty tag-->
+</a>
+<h4>Using a customized Builder</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+					It should be noted that one could write a builder by implementing the
+					<span class="codefrag">de.odysseus.el.tree.TreeBuilder</span> interface from scratch.
+					However, you may also want to subclass the <span class="codefrag">Builder</span> class
+					and override the <span class="codefrag">createParser()</span> to work with a modified
+					parser implementation.
+				</p>
+<p>
+					Either way, the new tree builder can be passed to a factory via
+				</p>
+<pre class="code">TreeStore store = new TreeStore(new MyBuilder(), new Cache(100));
+ExpressionFactory factory = new ExpressionFactoryImpl(store);</pre>
+<p>
+					As an alternative, you may set property
+				</p>
+<pre class="code">de.odysseus.el.tree.TreeBuilder</pre>
+<p>
+					to the fully qualified class name of your builder implementation.
+				</p>
+</div>
+<a name="N65650">
+<!--empty tag-->
+</a>
+<a name="methodInvocations">
+<!--empty tag-->
+</a>
+<h4>Enabling/Disabling Method Invocations</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+					Many people have noticed the lack of method invocations as a major weakness of
+					the unified expression language. When talking about method invocations, we mean
+					expressions like <span class="codefrag">${foo.matches('[0-9]+')}</span> that aren't supported by
+					the 2.1 standard. However, method invocations have been added in maintenance
+					release 2 of JSR 245, which is supported by <em>JUEL</em>.
+				</p>
+<div class="frame warning">
+<div class="label">Warning</div>
+<div class="body">
+					<em>JUEL's</em> proprietary API for method invocations has been removed in
+					version 2.2.
+				</div>
+</div>
+<p>
+					To enable (disable) expressions using method invocations, you may set property
+				</p>
+<pre class="code">javax.el.methodInvocations</pre>
+<p>
+					to <span class="codefrag">true</span> (<span class="codefrag">false</span>).
+				</p>
+<p>
+					Method invocations are enabled in profile <em>JEE6</em> (default)
+					and disabled in <em>JEE5</em>.
+				</p>
+</div>
+<a name="N65698">
+<!--empty tag-->
+</a>
+<a name="varArgs">
+<!--empty tag-->
+</a>
+<h4>Enabling/Disabling VarArgs</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+					The EL specification does not support function calls with variable argument lists.
+					That is, if we bind <span class="codefrag">String.format(String, Object...)</span> to function
+					<span class="codefrag">str:format</span>, the expression <span class="codefrag">${str:format('Hey %s','Joe')}</span>
+					will not work.
+				</p>
+<p>
+					To enable (disable) VarArgs in function and method invocations, you may set property
+				</p>
+<pre class="code">javax.el.varArgs</pre>
+<p>
+					to <span class="codefrag">true</span> (<span class="codefrag">false</span>).
+				</p>
+<p>
+					VarArg invocations are enabled in profile <em>JEE6</em> (default)
+					and disabled in <em>JEE5</em>.
+				</p>
+</div>
+<a name="N65743">
+<!--empty tag-->
+</a>
+<a name="nullProperties">
+<!--empty tag-->
+</a>
+<h4>Enabling/Disabling null Properties</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+					The EL specification describes the evaluation semantics of <span class="codefrag">base[property]</span>.
+					If <span class="codefrag">property</span> is <span class="codefrag">null</span>, the specification states not to resolve
+					<span class="codefrag">null</span> on <span class="codefrag">base</span>.
+					Rather, <span class="codefrag">null</span> should be returned if <span class="codefrag">getValue(...)</span> has been
+					called and a <span class="codefrag">PropertyNotFoundException</span> should be thrown else.
+					As a consequence, it is impossible to resolve <span class="codefrag">null</span> as a key in a map.
+					However, <em>JUEL</em>'s expression factory may be configured to resolve <span class="codefrag">null</span>
+					like any other property value.
+				</p>
+<p>
+					To enable (disable) <span class="codefrag">null</span> as an EL property value, you may set property
+				</p>
+<pre class="code">javax.el.nullProperties</pre>
+<p>
+					to <span class="codefrag">true</span> (<span class="codefrag">false</span>).
+				</p>
+<p>
+					Assume that identifier <span class="codefrag">map</span> resolves to a <span class="codefrag">java.util.Map</span>.
+				</p>
+<ul>
+					<li>
+						If feature <span class="codefrag">javax.el.nullProperties</span> has been disabled, evaluating
+						<span class="codefrag">${base[null]}</span> as an rvalue (lvalue) will return <span class="codefrag">null</span>
+						(throw an exception).
+					</li>
+					<li>
+						If feature <span class="codefrag">javax.el.nullProperties</span> has been enabled, evaluating
+						<span class="codefrag">${base[null]}</span> as an rvalue (lvalue) will get (put) the value for key
+						<span class="codefrag">null</span> in that map.
+					</li>
+				</ul>
+<p>
+					The default is not to allow <span class="codefrag">null</span> as an EL property value.
+				</p>
+</div>
+<a name="N65851">
+<!--empty tag-->
+</a>
+<a name="ignoreReturnType">
+<!--empty tag-->
+</a>
+<h4>Enabling/Disabling ignoring of expected return type</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+					The EL specification allows to determine an expected return type for
+					method expressions. The return type should then be checked to match the
+					actual return type of the method to invoke. Unfortunately, the EL reference
+					implementation ignores this parameter completely. This caused some "legacy"
+					code to not recognize that they're passing wrong types. When switching to
+					JUEL as their EL implementation, this causes an exception to be thrown.  
+				</p>
+<p>
+					For compatibility, JUEL lets you choose to ignore the expected return
+					type passed to <span class="codefrag">EpressionFactory.createMethodExpression()</span> when looking
+					up a method to invoke. (This option has no effect when evaluating literal method
+					expressions, where the expected return type acts as coercion target type.)
+				</p>
+<p>
+					To enable (disable) ignoring of the expected return type parameter, you may set property
+				</p>
+<pre class="code">javax.el.ignoreReturnType</pre>
+<p>
+					to <span class="codefrag">true</span> (<span class="codefrag">false</span>).
+				</p>
+<p>
+					The default is respect (i.e. <em>not</em> to ignore) the expected return type parameter.
+				</p>
+</div>
+<a name="N65890">
+<!--empty tag-->
+</a>
+<h4>Using a customized Cache</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+					The default lru cache implementation can be customized by specifying a maximum
+					cache size. However, it might be desired to use a different caching mechanism.
+					Doing this means to provide a class that implements the <span class="codefrag">TreeCache</span> interface.
+				</p>
+<p>
+					Now, having a new cache implementatation, it can be passed to a factoy via
+				</p>
+<pre class="code">TreeStore store = new TreeStore(new Builder(), new MyCache());
+ExpressionFactory factory = new ExpressionFactoryImpl(store);</pre>
+</div>
+</div>
+		<a name="N65911">
+<!--empty tag-->
+</a>
+<h3>Tree Expressions</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+				In the basics section, we already presented the
+				<span class="codefrag">TreeValueExpression</span> and <span class="codefrag">TreeMethodExpression</span> classes,
+				which are used to represent parsed expressions.
+			</p>
+<a name="N65925">
+<!--empty tag-->
+</a>
+<h4>Equality</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+					As for all objects, the <span class="codefrag">equals(Object)</span> method is used to test
+					for equality. The specification notes that two expressions of the same
+					type are equal if and only if they have an identical parsed representation.
+				</p>
+<p>
+					This makes clear, that the expression string cannot serve as a sufficient condition
+					for equality testing. Consider expression string <span class="codefrag">${foo}</span>. When creating
+					tree expressions from that string using different variable mappings for <span class="codefrag">foo</span>,
+					these expressions must not be considered equal. Similar, an expression string using
+					function invocations may be used to create tree expressions with different function
+					mappings. Even worse, <span class="codefrag">${foo()}</span> and <span class="codefrag">${bar()}</span> may be equal if
+					<span class="codefrag">foo</span> and <span class="codefrag">bar</span> referred to the same method at creation time.
+				</p>
+<p>
+					To handle these requirements, <em>JUEL</em> separates the variable and function bindings
+					from the pure parse tree. The tree only depends on the expression string and can therefore
+					be reused by all expressions created from a string. The bindings are then created from
+					the tree, variable mapper and function mapper. Together, the tree and bindings form the
+					core of a tree expression.
+				</p>
+<p>
+					When comparing tree expressions, the trees are structurally compared, ignoring the
+					names of functions and variables. Instead, the corresponding methods and value
+					expressions bound to them are compared.
+				</p>
+</div>
+<a name="N65967">
+<!--empty tag-->
+</a>
+<h4>Serialization</h4>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+					As required by the specification, all expressions have to be serializable.
+					When serializing a tree expression, the expression string is serialized, not the tree.
+					On deserialization, the tree is rebuilt from the expression string.
+				</p>
+</div>
+</div>
+		<a name="N65977">
+<!--empty tag-->
+</a>
+<h3>Customizing Type Conversions</h3>
+<div style="margin-left: 0 ; border: 2px">
+<p>
+				The rules to apply when coercing objects is described in the specification.
+				However, in a non-JEE environment, it might be desired to apply application-specific
+				or additional type conversions. To do this, you must provide <em>JUEL</em>'s
+				expression factory with an implementation of 
+			</p>
+<pre class="code">de.odysseus.el.misc.TypeConverter</pre>
+<p>which defines a single method:</p>
+<pre class="code">public &lt;T&gt; T convert(Object value, Class&lt;T&gt; type) throws ELException</pre>
+<p>
+				The default converter is implemented in <span class="codefrag">de.odysseus.el.misc.TypeConverterImpl</span>.
+				To use your new type converter, pass an instance of it to the factory constructor
+			</p>
+<pre class="code">ExpressionFactoryImpl(TreeStore store, TypeConverter converter)</pre>
+<p>
+				As an alternative, you may set property
+			</p>
+<pre class="code">de.odysseus.el.misc.TypeConverter</pre>
+<p>
+				to the fully qualified name of your converter class (requires your class to
+				provide a default constructor).
+			</p>
+<p>
+				The <span class="codefrag">BeanELResolver.invoke(...)</span> method needs type conversions to convert
+				actual method parameters to the method's formal parameter types. Unfortunately, the
+				resolver API doesn't provide access the an <span class="codefrag">ExpressionFactory</span> to use
+				our customized conversions via <span class="codefrag">ExpressionFactory.coerceToType(...)</span>.
+				<em>JUEL</em>'s bean resolver implementation consults the <span class="codefrag">javax.el.ExpressionFactory</span>
+				context property to get a factory before creating a default using <span class="codefrag">ExpressionFactory.getInstance()</span>.
+				That is, if you're using <em>JUEL</em>'s EL API, you may do
+			</p>
+<pre class="code">elContext.putContext(javax.el.ExpressionFactory.class, factory)</pre>
+<p>
+				to make your customized type conversions available to the resolver.
+			</p>
+</div>
+	</div>
+</div>
+<div id="footer">
+		© 2006-2013 Odysseus Software GmbH. All rights reserved.
+	</div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Java Unified Expression Language :: Guide :: Utility Classes</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<link href="../../skin/css/page.css" rel="stylesheet" type="text/css"/>
+<link href="../../skin/css/content.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="header">
+<a href="../../index.html">
+<img alt="JUEL" src="../../skin/images/juel-logo.gif"/>
+</a>
+<div class="navigation">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="left" class="trail">
+<span class="selected">
+<a href="../../index.html">Home</a>
+</span> | <a href="http://sourceforge.net/projects/juel/">SourceForge</a> | <a href="https://github.com/beckchr/juel/">GitHub</a>
+</td>
+<td align="right" class="tabs">
+<a href="http://prdownloads.sourceforge.net/juel/juel-2.2.7.zip?download">Download</a> | <a href="../../juel.pdf">PDF</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="leftcol">
+<div class="menu">
+<ul>
+<li class="selected-contained">
+<a href="../../guide/index.html">Guide</a>
+<ul>
+<li>
+<a href="../../guide/start.html">Quickstart</a>
+</li>
+<li>
+<a href="../../guide/basic/index.html">Basic Classes</a>
+</li>
+<li class="selected">Utility Classes<ul>
+<li>
+<a href="../../guide/util/context.html">Simple Context</a>
+</li>
+<li>
+<a href="../../guide/util/resolver.html">Simple Resolver</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="../../guide/service.html">Plugin JUEL</a>
+</li>
+<li>
+<a href="../../guide/advanced/index.html">Advanced Topics</a>
+</li>
+<li>
+<a href="../../guide/issues.html">Specification Issues</a>
+</li>
+</ul>
+</li>
+<li>
+<span>Project</span>
+<ul>
+<li>
+<a href="../../project/changes.html">History of Changes</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="maincol">
+<div class="content">
+<h2>Utility Classes</h2>
+		<p>
+			When creating and evaluating expressions, some other important classes come into play:
+			a <span class="codefrag">javax.el.ELContext</span> is required at creation time and evaluation time. It
+			contains methods to access a function mapper (<span class="codefrag">javax.el.FunctionMapper</span>), a variable
+			mapper (<span class="codefrag">javax.el.VariableMapper</span>) and a resolver (<span class="codefrag">javax.el.ELResolver</span>).
+		</p>
+		<ul>
+			<li>
+				At creation time, the context's function mapper and variable mapper are used to bind
+				function invocations to static methods and identifiers (variables) to value expressions.
+				The context's resolver is <em>not</em> used at creation time.
+			</li>
+			<li>
+				At evaluation time, the context's resolver is used for property resolutions and to resolve
+				unbound identifiers (top-level properties).
+				The context's function mapper and variable mapper are <em>not</em> used at evaluation time.
+			</li>
+		</ul>
+		<p>
+			<em>JUEL</em> provides simple implementations of these classes to get you using the unified EL
+			"out of the box".
+		</p>
+	</div>
+</div>
+<div id="footer">
+		© 2006-2013 Odysseus Software GmbH. All rights reserved.
+	</div>
+</body>
+</html>

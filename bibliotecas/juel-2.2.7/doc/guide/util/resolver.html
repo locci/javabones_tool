@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Java Unified Expression Language :: Guide :: Utility Classes :: Simple Resolver</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<link href="../../skin/css/page.css" rel="stylesheet" type="text/css"/>
+<link href="../../skin/css/content.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="header">
+<a href="../../index.html">
+<img alt="JUEL" src="../../skin/images/juel-logo.gif"/>
+</a>
+<div class="navigation">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="left" class="trail">
+<span class="selected">
+<a href="../../index.html">Home</a>
+</span> | <a href="http://sourceforge.net/projects/juel/">SourceForge</a> | <a href="https://github.com/beckchr/juel/">GitHub</a>
+</td>
+<td align="right" class="tabs">
+<a href="http://prdownloads.sourceforge.net/juel/juel-2.2.7.zip?download">Download</a> | <a href="../../juel.pdf">PDF</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="leftcol">
+<div class="menu">
+<ul>
+<li class="selected-contained">
+<a href="../../guide/index.html">Guide</a>
+<ul>
+<li>
+<a href="../../guide/start.html">Quickstart</a>
+</li>
+<li>
+<a href="../../guide/basic/index.html">Basic Classes</a>
+</li>
+<li class="selected-contained">
+<a href="../../guide/util/index.html">Utility Classes</a>
+<ul>
+<li>
+<a href="../../guide/util/context.html">Simple Context</a>
+</li>
+<li>
+<span class="selected">Simple Resolver</span>
+</li>
+</ul>
+</li>
+<li>
+<a href="../../guide/service.html">Plugin JUEL</a>
+</li>
+<li>
+<a href="../../guide/advanced/index.html">Advanced Topics</a>
+</li>
+<li>
+<a href="../../guide/issues.html">Specification Issues</a>
+</li>
+</ul>
+</li>
+<li>
+<span>Project</span>
+<ul>
+<li>
+<a href="../../project/changes.html">History of Changes</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="maincol">
+<div class="content">
+<h2>Simple Resolver</h2>
+		<p>
+			<em>JUEL</em> provides the <span class="codefrag">de.odysseus.el.util.SimpleResolver</span> class for
+			use as a simple resolver, suitable to resolve top-level identifiers and to delegate
+			to another resolver provided at construction time.
+		</p>
+		<p>
+			If no resolver delegate is supplied, a composite resolver will be used as default, capable
+			of resolving bean properties, array values, list values, resource values and map values.
+		</p>
+		<p>
+			A resolver is made to resolve properties. It operates on a pair of objects, called
+			<em>base</em> and <em>property</em>. <em>JUEL</em>'s simple resolver maintains a map
+			to directly resolve top-level properties, that is <span class="codefrag">base == null</span>.
+			Resolution for base/property pairs with <span class="codefrag">base != null</span> is delegated.
+		</p>
+		<p>
+			Finally, a simple resolver may also be flagged as "read-only".
+			In this case, invoking the <span class="codefrag">setValue(ELContext, Object, Object, Object)</span>
+			method will throw an exception.
+		</p>
+		<pre class="code">import java.util.Date;
+import javax.el.*;
+import de.odysseus.el.util.SimpleContext;
+import de.odysseus.el.util.SimpleResolver;
+import de.odysseus.el.ExpressionFactoryImpl;
+...
+ExpressionFactory factory = new ExpressionFactoryImpl();
+SimpleContext context = new SimpleContext(new SimpleResolver());
+
+// resolve top-level property
+factory.createValueExpression(context, "#{pi}", double.class).setValue(context, Math.PI);
+ValueExpression expr1 = factory.createValueExpression(context, "${pi/2}", double.class);
+System.out.println("pi/2 = " + expr1.getValue(context)); // 1.5707963...
+
+// resolve bean property
+factory.createValueExpression(context, "#{current}", Date.class).setValue(context, new Date());
+ValueExpression expr2 = factory.createValueExpression(context, "${current.time}", long.class);
+System.out.println("current.time = " + expr2.getValue(context));</pre>
+	</div>
+</div>
+<div id="footer">
+		© 2006-2013 Odysseus Software GmbH. All rights reserved.
+	</div>
+</body>
+</html>

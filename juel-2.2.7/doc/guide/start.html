@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Java Unified Expression Language :: Guide :: Getting Started</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<link href="../skin/css/page.css" rel="stylesheet" type="text/css"/>
+<link href="../skin/css/content.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="header">
+<a href="../index.html">
+<img alt="JUEL" src="../skin/images/juel-logo.gif"/>
+</a>
+<div class="navigation">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="left" class="trail">
+<span class="selected">
+<a href="../index.html">Home</a>
+</span> | <a href="http://sourceforge.net/projects/juel/">SourceForge</a> | <a href="https://github.com/beckchr/juel/">GitHub</a>
+</td>
+<td align="right" class="tabs">
+<a href="http://prdownloads.sourceforge.net/juel/juel-2.2.7.zip?download">Download</a> | <a href="../juel.pdf">PDF</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="leftcol">
+<div class="menu">
+<ul>
+<li class="selected-contained">
+<a href="../guide/index.html">Guide</a>
+<ul>
+<li>
+<span class="selected">Quickstart</span>
+</li>
+<li>
+<a href="../guide/basic/index.html">Basic Classes</a>
+</li>
+<li>
+<a href="../guide/util/index.html">Utility Classes</a>
+</li>
+<li>
+<a href="../guide/service.html">Plugin JUEL</a>
+</li>
+<li>
+<a href="../guide/advanced/index.html">Advanced Topics</a>
+</li>
+<li>
+<a href="../guide/issues.html">Specification Issues</a>
+</li>
+</ul>
+</li>
+<li>
+<span>Project</span>
+<ul>
+<li>
+<a href="../project/changes.html">History of Changes</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="maincol">
+<div class="content">
+<h2>Getting Started</h2>
+		<p>
+			The <em>JUEL</em> distribution contains the following JAR files:
+		</p>
+		<ol>
+			<li>
+				<span class="codefrag">juel-api-2.2.x.jar</span> - contains the <span class="codefrag">javax.el</span>
+				API classes.
+			</li>
+			<li>
+				<span class="codefrag">juel-impl-2.2.x.jar</span> - contains the <span class="codefrag">de.odysseus.el</span>
+				implementation classes.
+			</li>
+			<li>
+				<span class="codefrag">juel-spi-2.2.x.jar</span> - contains the <span class="codefrag">META-INF/service/javax.el.ExpressionFactory</span>
+				service provider resource. (You will need this if you have several expression
+				language implementations on your classpath and want to force <em>JUEL</em>s
+				implementation to be chosen by <span class="codefrag">ExpressionFactory.newInstance()</span>).
+			</li>
+		</ol>
+		<p>
+			Here's all you need to use the EL in your application (assuming you added
+			the JUEL JAR files to your classpath and did <span class="codefrag">import javax.el.*</span>):
+		</p>
+		<ol>
+			<li>
+				<strong>Factory and Context</strong>
+				<pre class="code">// the ExpressionFactory implementation is de.odysseus.el.ExpressionFactoryImpl
+ExpressionFactory factory = new de.odysseus.el.ExpressionFactoryImpl();
+
+// package de.odysseus.el.util provides a ready-to-use subclass of ELContext
+de.odysseus.el.util.SimpleContext context = new de.odysseus.el.util.SimpleContext();</pre>
+			</li>
+			<li>
+				<strong>Functions and Variables</strong>
+				<pre class="code">// map function math:max(int, int) to java.lang.Math.max(int, int)
+context.setFunction("math", "max", Math.class.getMethod("max", int.class, int.class));
+
+// map variable foo to 0
+context.setVariable("foo", factory.createValueExpression(0, int.class));</pre>
+			</li>
+			<li>
+				<strong>Parse and Evaluate</strong>
+				<pre class="code">// parse our expression
+ValueExpression e = factory.createValueExpression(context, "${math:max(foo,bar)}", int.class);
+
+// set value for top-level property "bar" to 1
+factory.createValueExpression(context, "${bar}", int.class).setValue(context, 1);
+
+// get value for our expression
+System.out.println(e.getValue(context)); // --&gt; 1</pre>
+			</li>
+		</ol>
+	</div>
+</div>
+<div id="footer">
+		© 2006-2013 Odysseus Software GmbH. All rights reserved.
+	</div>
+</body>
+</html>

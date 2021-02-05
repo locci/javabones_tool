@@ -1,0 +1,1539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Java Unified Expression Language :: JUEL Project :: History of Changes</title>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<link href="../skin/css/page.css" rel="stylesheet" type="text/css"/>
+<link href="../skin/css/content.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="header">
+<a href="../index.html">
+<img alt="JUEL" src="../skin/images/juel-logo.gif"/>
+</a>
+<div class="navigation">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="left" class="trail">
+<span class="selected">
+<a href="../index.html">Home</a>
+</span> | <a href="http://sourceforge.net/projects/juel/">SourceForge</a> | <a href="https://github.com/beckchr/juel/">GitHub</a>
+</td>
+<td align="right" class="tabs">
+<a href="http://prdownloads.sourceforge.net/juel/juel-2.2.7.zip?download">Download</a> | <a href="../juel.pdf">PDF</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="leftcol">
+<div class="menu">
+<ul>
+<li>
+<a href="../guide/index.html">Guide</a>
+<ul>
+<li>
+<a href="../guide/start.html">Quickstart</a>
+</li>
+<li>
+<a href="../guide/basic/index.html">Basic Classes</a>
+</li>
+<li>
+<a href="../guide/util/index.html">Utility Classes</a>
+</li>
+<li>
+<a href="../guide/service.html">Plugin JUEL</a>
+</li>
+<li>
+<a href="../guide/advanced/index.html">Advanced Topics</a>
+</li>
+<li>
+<a href="../guide/issues.html">Specification Issues</a>
+</li>
+</ul>
+</li>
+<li>
+<span class="selected-contained">Project</span>
+<ul>
+<li>
+<span class="selected">History of Changes</span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="maincol">
+<div class="content">
+<h2>History of Changes</h2>
+<a name="N65543">
+<!--empty tag-->
+</a>
+<a name="2.2.7">
+<!--empty tag-->
+</a>
+<h3>Version 2.2.7 (2014/02/06)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> type: </em>
+<strong>update</strong>
+<em> fixes: </em>
+<strong>73</strong>
+</dt>
+<dd>
+			updated method invocation code to use <span class="codefrag">Method.setAccessible()</span> only if necessary.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>build</strong>
+<em> type: </em>
+<strong>add</strong>
+<em> fixes: </em>
+<strong>79</strong>
+</dt>
+<dd>
+			Catch <span class="codefrag">SecurityException</span> when accessing <span class="codefrag">default el.properties</span>.
+		</dd>
+	</dl>
+</div>
+<a name="N65594">
+<!--empty tag-->
+</a>
+<a name="2.2.6">
+<!--empty tag-->
+</a>
+<h3>Version 2.2.6 (2013/01/11)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> type: </em>
+<strong>update</strong>
+<em> thanks to: </em>
+<strong>Oleg Varaksin, Arjan Tijms</strong>.<em> fixes: </em>
+<strong>71</strong>
+</dt>
+<dd>
+			For a single identifier method expression, if the identifier evaluates to another
+			method expression, invoke that method expression. (The semantics for this case is not
+			covered in the specification.
+			See also <a href="http://java.net/jira/browse/EL_SPEC-11">
+<em>this issue</em>
+</a>.
+			This change was made to improve compatibility with other EL implementations.)
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>build</strong>
+<em> type: </em>
+<strong>add</strong>
+<em> thanks to: </em>
+<strong>Adam Crume</strong>.</dt>
+<dd>
+			Added OSGi bundle manifest entries for <span class="codefrag">juel-api</span> and <span class="codefrag">juel-impl</span>
+			and declared <span class="codefrag">de.odysseus.el.ExpressionFactoryImpl</span> as an OSGi service.
+		</dd>
+	</dl>
+</div>
+<a name="N65656">
+<!--empty tag-->
+</a>
+<a name="2.2.5">
+<!--empty tag-->
+</a>
+<h3>Version 2.2.5 (2012/07/08)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>build</strong>
+<em> type: </em>
+<strong>update</strong>
+<em> thanks to: </em>
+<strong>Oleg Varaksin</strong>.<em> fixes: </em>
+<strong>3521406</strong>
+</dt>
+<dd>
+			Changed scope for dependency from <span class="codefrag">juel-impl</span> to <span class="codefrag">juel-api</span>
+			to <span class="codefrag">provided</span>. Therefore, to include <span class="codefrag">juel-api</span>, users now
+			need to explicitly add it as a dependency.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Re-implemented <span class="codefrag">Cache</span> based on <span class="codefrag">ConcurrentHashMap</span> and
+			<span class="codefrag">ConcurrentLinkedQueue</span> to improve performance in multi-threaded environments.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+<em> thanks to: </em>
+<strong>Martin Koci</strong>.<em> fixes: </em>
+<strong>3529970</strong>
+</dt>
+<dd>
+			Determine target type and coerce argument in <span class="codefrag">ExpressionNode.setValue()</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>fix</strong>
+<em> thanks to: </em>
+<strong>Martin Koci</strong>.<em> fixes: </em>
+<strong>834616</strong>
+</dt>
+<dd>
+			Catch and re-throw <span class="codefrag">IllegalArgumentException</span> as <span class="codefrag">ELException</span>
+			in <span class="codefrag">BeanELResolver.setValue()</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Updated messages with keys <span class="codefrag">error.coerce.type</span> and <span class="codefrag">error.coerce.value</span>
+			to include value that could not be coerced.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Create HashMap in <span class="codefrag">ELContext</span> lazily.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			<span class="codefrag">BeanELResolver</span> now caches property access methods.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>fix</strong>
+<em> fixes: </em>
+<strong>3420591</strong>
+</dt>
+<dd>
+			<span class="codefrag">ELContext.getContext(key)</span> and <span class="codefrag">putContext(key, value)</span> should
+			throw NPE if key is <span class="codefrag">null</span>
+		</dd>
+	</dl>
+</div>
+<a name="N65875">
+<!--empty tag-->
+</a>
+<a name="2.2.4">
+<!--empty tag-->
+</a>
+<h3>Version 2.2.4 (2011/09/30)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Added property <span class="codefrag">javax.el.ignoreReturnType</span> to ignore the expected return
+			type passed to <span class="codefrag">EpressionFactory.createMethodExpression()</span> when looking
+			up a method to invoke. (This option has no effect when evaluating literal method
+			expressions, where the expected return type acts as coercion target type.) 			
+		</dd>
+	</dl>
+</div>
+<a name="N65903">
+<!--empty tag-->
+</a>
+<a name="2.2.3">
+<!--empty tag-->
+</a>
+<h3>Version 2.2.3 (2011/01/30)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+<em> thanks to: </em>
+<strong>Martin Koci</strong>.<em> fixes: </em>
+<strong>3154206</strong>
+</dt>
+<dd>
+			fixed: a method invocation node invoked via <span class="codefrag">ValueExpression.getValue(...)</span>
+			should return <span class="codefrag">null</span> if its base (prefix) expression evaluates to <span class="codefrag">null</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>build</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Moved parent <span class="codefrag">pom.xml</span> from <span class="codefrag">modules</span> to project root to simplify
+			maven release build.
+		</dd>
+	</dl>
+</div>
+<a name="N65965">
+<!--empty tag-->
+</a>
+<a name="2.2.2">
+<!--empty tag-->
+</a>
+<h3>Version 2.2.2 (2010/11/12)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>build</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Updated POMs to sync JUEL releases to maven central via Sonatype's repository hosting service.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+<em> fixes: </em>
+<strong>3104608</strong>
+</dt>
+<dd>
+			fixed: <span class="codefrag">MethodExpression.invoke(...)</span> should ignore passed parameter types if
+			arguments are specified in the expression as in <span class="codefrag">${foo.bar(123)}</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+<em> fixes: </em>
+<strong>3095122</strong>
+</dt>
+<dd>
+			Improved method lookup in method expressions (when calling <span class="codefrag">MethodExpression.invoke(...)</span>,
+			<span class="codefrag">Method.setAccessible(true)</span> is used if necessary).
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Changed implementation of <span class="codefrag">ASTProperty.getValueReference()</span> to throw
+			an exception if <span class="codefrag">base</span> expression evaluates to <span class="codefrag">null</span>.
+			Updated documentation of <span class="codefrag">ValueExpression.getValueReference()</span> accordingly.
+		</dd>
+	</dl>
+</div>
+<a name="N66067">
+<!--empty tag-->
+</a>
+<a name="2.2.1">
+<!--empty tag-->
+</a>
+<h3>Version 2.2.1 (2009/12/13)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Added <span class="codefrag">MethodExpression.isParametersProvided()</span>. This method was added silently
+			to the API (wasn't mentioned anywhere prior to the final release of EE6) and forces this release...
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>build</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Added OSGi attributes to manifest files of <span class="codefrag">juel-api-2.2.x.jar</span>,
+			<span class="codefrag">juel-impl-2.2.x.jar</span> and <span class="codefrag">juel-spi-2.2.x.jar</span>.
+			E.g. the latter two can now be added as OSGi modules to glassfish v3.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Added <span class="codefrag">SimpleResolver.setELResolver(ELResolver)</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Removed static field <span class="codefrag">BeanELResolver.DEFAULT_FACTORY</span>. Lazily get a factory for type
+			conversions when needed to coerce method parameters instead.
+		</dd>
+	</dl>
+</div>
+<a name="N66155">
+<!--empty tag-->
+</a>
+<a name="2.2.0">
+<!--empty tag-->
+</a>
+<h3>Version 2.2.0 (2009/12/01)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Improved implementation of type conversions in <span class="codefrag">de.odysseus.el.misc.TypeConverterImpl</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Added some more unit tests.
+		</dd>
+	</dl>
+</div>
+<a name="N66196">
+<!--empty tag-->
+</a>
+<a name="2.2.0-rc3">
+<!--empty tag-->
+</a>
+<h3>Version 2.2.0-rc3 (2009/11/08)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			If no properties are available in <em>JUEL</em>'s expression factory (neither passed in nor from
+			<span class="codefrag">el.properties</span>), use system properties if <span class="codefrag">System.getProperty("javax.el.ExpressionFactory")</span>
+			points to <em>JUEL</em>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>admin</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Split code base into modules <span class="codefrag">modules/api</span>, <span class="codefrag">modules/impl</span> and
+			<span class="codefrag">modules/spi</span>; added maven build for these.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>build</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Separated the JAR service provider (<span class="codefrag">META-INF/services/javax.el.ExpressionFactory</span>)
+			into its own <span class="codefrag">juel-spi-2.2.x.jar</span>. This allows to have <span class="codefrag">juel-impl-2.2.x.jar</span>
+			on your classpath without forcing <em>JUEL</em> to be used by <span class="codefrag">ExpressionFactory.newInstance()</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Added <span class="codefrag">ExpressionFactoryImpl.Profile</span> enum type and several new constructors
+			to easily choose between <em>JEE5</em> and <em>JEE6</em> (default) behavior.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>docs</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Updated documentation for 2.2.
+		</dd>
+	</dl>
+</div>
+<a name="N66327">
+<!--empty tag-->
+</a>
+<a name="2.1.3/2.2.0-rc2">
+<!--empty tag-->
+</a>
+<h3>Version 2.1.3/2.2.0-rc2 (2009/10/09)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Added <span class="codefrag">ExpressionFactoryImpl(TreeStore store, TypeConverter converter)</span> constructor.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>fix</strong>
+<em> thanks to: </em>
+<strong>Pavel Vojtechovsky</strong>.<em> fixes: </em>
+<strong>2871773</strong>
+</dt>
+<dd>
+			Fixed: <span class="codefrag">ListELResolver.getValue(...)</span> should return <span class="codefrag">null</span> when index is out of range.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>fix</strong>
+<em> thanks to: </em>
+<strong>Pavel Vojtechovsky</strong>.<em> fixes: </em>
+<strong>2871795</strong>
+</dt>
+<dd>
+			Fixed: second operand is always evaluated in and/or operations (e.g. <span class="codefrag">${true or false}</span>).
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>fix</strong>
+<em> fixes: </em>
+<strong>2822943</strong>
+</dt>
+<dd>
+			Fixed: <span class="codefrag">BeanELResolver</span> should use <span class="codefrag">Method.setAccessible(true)</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>docs</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Updated copyright notes.
+		</dd>
+	</dl>
+</div>
+<a name="N66453">
+<!--empty tag-->
+</a>
+<a name="2.2.0-rc1">
+<!--empty tag-->
+</a>
+<h3>Version 2.2.0-rc1 (2009/08/09)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Implemented changes from JSR 245, maintenance release 2. This replaces <em>JUEL</em>s
+			proprietary API for method invocations. The <span class="codefrag">BeanELResolver</span> class now
+			provides a generic default for method invocations using reflection. Method invocations
+			are disabled/enabled via the <span class="codefrag">javax.el.methodInvocations</span> property.
+		</dd>
+	</dl>
+</div>
+<a name="N66484">
+<!--empty tag-->
+</a>
+<a name="2.1.2">
+<!--empty tag-->
+</a>
+<h3>Version 2.1.2 (2009/04/26)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>fix</strong>
+<em> thanks to: </em>
+<strong>Gerhard Petracek</strong>.<em> fixes: </em>
+<strong>2748538</strong>
+</dt>
+<dd>
+			Fixed: for a single identifier expression <span class="codefrag">${foo}</span>,
+			<span class="codefrag">ValueExpression.setValue(...)</span> always calls <span class="codefrag">ELContext.setValue(...)</span>,
+			even if <span class="codefrag">foo</span> is bound to a variable.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>build</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Renamed API/impl jars to <span class="codefrag">juel-api-&lt;version&gt;.jar</span> and
+			<span class="codefrag">juel-impl-&lt;version&gt;.jar</span> to reflect maven artifact names
+			<span class="codefrag">juel-api</span> and <span class="codefrag">juel-impl</span>.
+		</dd>
+	</dl>
+</div>
+<a name="N66555">
+<!--empty tag-->
+</a>
+<a name="2.1.1">
+<!--empty tag-->
+</a>
+<h3>Version 2.1.1 (2009/03/21)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Added support for bracket operator in method invocations (e.g. <span class="codefrag">${foo[bar](baz)}</span>).
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Added implementation of <span class="codefrag">javax.el</span> api classes.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>build</strong>
+<em> type: </em>
+<strong>update</strong>
+<em> thanks to: </em>
+<strong>Wolfgang Häfelinger</strong>.</dt>
+<dd>
+			Updated <span class="codefrag">pom.xml</span> to package the following jar files:
+			<span class="codefrag">juel-&lt;version&gt;.jar</span>, 
+			<span class="codefrag">juel-&lt;version&gt;-api.jar</span> and 
+			<span class="codefrag">juel-&lt;version&gt;-impl.jar</span>. 
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>fix</strong>
+<em> thanks to: </em>
+<strong>Adam Winer</strong>.<em> fixes: </em>
+<strong>2590830</strong>
+</dt>
+<dd>
+			Fixed: <span class="codefrag">SimpleContext.getVariableMapper()</span> returns <span class="codefrag">null</span>
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Experimental support for syntax extensions. 
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>build</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Reorganized project structure to meet maven's standard layout. 
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Improved method invocation support by passing <span class="codefrag">de.odysseus.el.misc.MethodInvocation</span>
+			as property to <span class="codefrag">ELResolver.getValue(..., Object property)</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Added support for varargs.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Introduce <span class="codefrag">TypeConverter</span> to allow for customized coercion rules.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>remove</strong>
+</dt>
+<dd>
+			Removed old <span class="codefrag">TypeConversions</span> (use <span class="codefrag">TypeConverter.DEFAULT</span>).
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>docs</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Update to fop-0.95-beta and forrester-0.3.3.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>admin</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Moved to SVN.
+		</dd>
+	</dl>
+</div>
+<a name="N66806">
+<!--empty tag-->
+</a>
+<a name="2.1.0">
+<!--empty tag-->
+</a>
+<h3>Version 2.1.0 (2007/03/06)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Use <span class="codefrag">StringBuilder</span> instead of <span class="codefrag">StringBuffer</span> (performance).
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Update API sources from glassfish.
+		</dd>
+	</dl>
+</div>
+<a name="N66850">
+<!--empty tag-->
+</a>
+<a name="2.1.0-rc3">
+<!--empty tag-->
+</a>
+<h3>Version 2.1.0-rc3 (2006/10/20)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>fix</strong>
+<em> thanks to: </em>
+<strong>Frédéric Esnault</strong>.</dt>
+<dd>
+			<span class="codefrag">ListELResolver</span> was missing in <span class="codefrag">SimpleResolver</span>'s
+			default chain of resolver delegates.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Update API sources from glassfish.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Minor performance improvements in type conversions and number operations.
+		</dd>
+	</dl>
+</div>
+<a name="N66915">
+<!--empty tag-->
+</a>
+<a name="2.1.0-rc2">
+<!--empty tag-->
+</a>
+<h3>Version 2.1.0-rc2 (2006/10/06)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Relaxed matching of return type for nonliteral <span class="codefrag">MethodExpression</span>'s.
+			The actual method return type is checked be assignable to the expression's expected
+			return type.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Let <span class="codefrag">ExpressionFactory</span>'s default constructor read properties from
+			<span class="codefrag">el.properties</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>admin</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Updated API classes to include new API methods <span class="codefrag">ExpressionFactory.newInstance()</span>
+			and <span class="codefrag">ExpressionFactory.newInstance(java.util.Properties)</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>build</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Package Jars with <span class="codefrag">META-INF/services/javax.el.ExpressionFactory</span> to
+			register <em>JUEL</em> as EL service provider.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Added <span class="codefrag">Builder.Feature.NULL_PROPERTIES</span> to resolve <span class="codefrag">${map[null]}</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Generified <span class="codefrag">TypeConversions.coerceToEnum(...)</span>
+			and <span class="codefrag">TypeConversions.coerceToEnum(...)</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>fix</strong>
+</dt>
+<dd>
+			Coerce <span class="codefrag">null</span> function parameters whose type is primitive.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>Minor scanner cleanup.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>Increased default cache size to 1000.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			<span class="codefrag">ExpressionFactoryImpl</span> no longer <span class="codefrag">final</span> to allow customization
+			by subclassing. E.g. using <em>JUEL</em> with JSF requires calling a default constructor.
+		</dd>
+	</dl>
+</div>
+<a name="N67126">
+<!--empty tag-->
+</a>
+<a name="2.1.0-rc1">
+<!--empty tag-->
+</a>
+<h3>Version 2.1.0-rc1 (2006/07/18)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Added support for method invocations as in <span class="codefrag">${foo.bar(1)}</span> (disabled by default).
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>fix</strong>
+</dt>
+<dd>Reject identifier <span class="codefrag">instanceof</span>.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>docs</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>Added "Advanced Topics" section.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>remove</strong>
+</dt>
+<dd>
+			Removed support for system property <span class="codefrag">de.odysseus.el.factory.builder</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>design</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Moved default tree cache implementation to package <span class="codefrag">de.odysseus.el.tree.impl</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>design</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Moved node implementation classes to package <span class="codefrag">de.odysseus.el.tree.impl.ast</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>remove</strong>
+</dt>
+<dd>
+			Removed deprecated methods from <span class="codefrag">SimpleResolver</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>Do not coerce <span class="codefrag">null</span> function parameters.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Minor improvemnents in <span class="codefrag">BooleanOperations</span> and <span class="codefrag">TypeConversions</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>Replaced JFlex scanner by handcoded scanner.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>Lazy initialize parser's lookahead token list.</dd>
+	</dl>
+</div>
+<a name="N67335">
+<!--empty tag-->
+</a>
+<a name="2.1.0-b2">
+<!--empty tag-->
+</a>
+<h3>Version 2.1.0-b2 (2006/07/01)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>docs</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>Added specification issues on number literals.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>remove</strong>
+</dt>
+<dd>Finally removed the old JavaCC parser.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>docs</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>Added some more Javadocs.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>fix</strong>
+</dt>
+<dd>
+			Avoid <span class="codefrag">NumberFormatException</span> when parsing integer/floating point literals.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>remove</strong>
+</dt>
+<dd>
+			Removed static<span class="codefrag">TreeBuilder.DEFAULT</span> constant.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>fix</strong>
+</dt>
+<dd>
+			Take builder and expected type into account when comparing tree expressions.
+		</dd>
+	</dl>
+</div>
+<a name="N67443">
+<!--empty tag-->
+</a>
+<a name="2.1.0-b1">
+<!--empty tag-->
+</a>
+<h3>Version 2.1.0-b1 (2006/06/18)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>docs</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>Added documentation (HTML and PDF).</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>Added <span class="codefrag">TreeValueExpression.isLeftValue()</span>.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>remove</strong>
+</dt>
+<dd>Removed <span class="codefrag">ExpressionNode.isLiteralValue()</span>.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>build</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>Added more jar manifest attributes.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>build</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>Let javac include line and source debug information.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Added secondary cache (<span class="codefrag">WeakHashMap</span>) to <span class="codefrag">TreeCache.Default</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>Lazy initialize <span class="codefrag">SimpleContext.ELResolver</span>.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>
+			Configure default builder class via system property <span class="codefrag">de.odysseus.el.factory.builder</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>Added @Override annotations.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>Added SAX XML filter sample.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Simplified <span class="codefrag">SimpleResolver</span> (now only handles top-level properties) .
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Deprecated <span class="codefrag">SimpleContext.setValue(...)</span>
+			and <span class="codefrag">SimpleContext.setFunctions(...)</span>. These methods will be removed in 2.1.0.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>Lots of minor refactorings.</dd>
+	</dl>
+</div>
+<a name="N67684">
+<!--empty tag-->
+</a>
+<a name="2.1.0-a3">
+<!--empty tag-->
+</a>
+<h3>Version 2.1.0-a3 (2006/06/04)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>fix</strong>
+</dt>
+<dd>
+			Re-throw <span class="codefrag">NumberFormatException</span> in number coercion as <span class="codefrag">ELException</span>.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>fix</strong>
+</dt>
+<dd>Expected type now mandatory for value expressions.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>docs</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>Added SourceForge logo to <em>JUEL</em> home page.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>Added a calculator sample.</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Now use a new hand crafted top-down parser and a JFlex generated scanner.
+			<em>This almost doubles parsing performance!</em>
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Moved the Javacc parser to package <span class="codefrag">de.odysseus.el.tree.impl.javacc</span>.
+			By default, it is excluded from the <em>JUEL</em> jar file.
+		</dd>
+	</dl>
+</div>
+<a name="N67804">
+<!--empty tag-->
+</a>
+<a name="2.1.0-a2">
+<!--empty tag-->
+</a>
+<h3>Version 2.1.0-a2 (2006/06/01)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Include EL api sources from glassfish now (the tomcat6 code was too buggy).
+			The sources are available under Sun's CDDL and are redistributed here.
+			Also added a note on that in the README.txt file.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>
+			Use pure Javacc parser. We no longer use the JJTree preprocessor.
+			The AST classes are now Javacc independent and could easily be reused with
+			other parser generators.
+		</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>Improved unit tests</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>docs</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>Added some documentation</dd>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>code</strong>
+<em> type: </em>
+<strong>update</strong>
+</dt>
+<dd>Improved parse exception formatting</dd>
+	</dl>
+</div>
+<a name="N67890">
+<!--empty tag-->
+</a>
+<a name="2.1.0-a1">
+<!--empty tag-->
+</a>
+<h3>Version 2.1.0-a1 (2006/05/13)</h3>
+<div style="margin-left: 0 ; border: 2px">
+<dl>
+		<dt>
+<em>developer: </em>
+<strong>cbe</strong>
+<em> context: </em>
+<strong>admin</strong>
+<em> type: </em>
+<strong>add</strong>
+</dt>
+<dd>Initial Release</dd>
+	</dl>
+</div>
+</div>
+</div>
+<div id="footer">
+		© 2006-2013 Odysseus Software GmbH. All rights reserved.
+	</div>
+</body>
+</html>
