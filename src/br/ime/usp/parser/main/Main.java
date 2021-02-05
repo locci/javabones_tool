@@ -55,11 +55,10 @@ public class Main {
 
                     if(!strOut.equals("")) {
 
-                        auxOut = strOut;
+                        auxOut = strOut;//String de apoio 1233355
                         //strOut = ep.parserConditions(strOut);
                         strOut = strOut + " => " +pa.stack(auxOut);
                         fm.buidLogFile(strOut);
-
                         //fm.buidLogFile(pa.pairs(strOut));
 
                     }
